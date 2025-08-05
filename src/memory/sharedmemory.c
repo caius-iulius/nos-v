@@ -138,8 +138,10 @@ static inline int check_processes_correct(void)
 		pid = st_config.config->processes[i].pid;
 		if (pid) {
 			pi = get_process(pid);
-			if (pi.pid < 0)
+			if (pi.pid < 0) {
+			    nosv_warn("Process %d is not running, but it is registered in the shared memory", pid);
 				return 0;
+			}
 
 			assert(pi.pid == pid);
 			if (pi.start_time != st_config.config->processes[i].start_time)
