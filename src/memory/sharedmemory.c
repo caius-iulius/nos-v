@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "common.h"
 #include "config/config.h"
@@ -25,6 +26,35 @@
 #include "memory/slab.h"
 #include "monitoring/monitoring.h"
 #include "scheduler/scheduler.h"
+
+
+#define SHM_DIR "/dev/shm/nosv/"
+#define PATH_MAX 256
+
+int shm_open(const char *name, int oflag, mode_t mode) {
+    nosv_warn("custom shm_open() called");
+
+    char path[PATH_MAX];
+    snprintf(path, sizeof(path), "%s%s", SHM_DIR, name);
+
+    int fd = open(path, oflag | O_CLOEXEC, mode);
+    if (fd == -1) {
+        return -1;
+    }
+
+    return fd;
+}
+
+// Replacement for shm_unlink
+int shm_unlink(const char *name) {
+    nosv_warn("custom shm_unlink() called");
+
+    char path[PATH_MAX];
+    snprintf(path, sizeof(path), "%s%s", SHM_DIR, name);  // e.g. /dev/shm/myshm
+
+    return unlink(path);
+}
+
 
 // Fix for older kernels
 #ifndef MAP_FIXED_NOREPLACE
