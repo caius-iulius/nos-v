@@ -135,10 +135,9 @@ static inline int check_processes_correct(void)
 	process_identifier_t pi;
 
 	for (int i = 0; i < MAX_PIDS; ++i) {
-		nosv_warn("checking index %d", i);
 		pid = st_config.config->processes[i].pid;
 		if (pid) {
-            nosv_warn("found pid %d", pid);
+            nosv_warn("Checking pid %d", pid);
 
 			pi = get_process(pid);
 			if (pi.pid < 0) {
