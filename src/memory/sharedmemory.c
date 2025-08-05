@@ -144,8 +144,10 @@ static inline int check_processes_correct(void)
 			}
 
 			assert(pi.pid == pid);
-			if (pi.start_time != st_config.config->processes[i].start_time)
+			if (pi.start_time != st_config.config->processes[i].start_time) {
+			    nosv_warn("Process %d has a different start time (%ld != %ld) than the one registered in the shared memory", pid, (long)pi.start_time, (long)st_config.config->processes[i].start_time);
 				return 0;
+			}
 		}
 	}
 
