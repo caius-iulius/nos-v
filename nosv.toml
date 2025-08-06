@@ -93,7 +93,7 @@
 	# complex_sets = ["0,1", "2,3", "4,5", "6,7"]
 	# Set to true if you want to print the topology at nOS-V initialization. Useful to check the computing
 	# resources available to nOS-V.
-	print = false
+	print = true
 
 # Task affinity config
 [task_affinity]
