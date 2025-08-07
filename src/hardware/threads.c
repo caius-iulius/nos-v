@@ -86,8 +86,9 @@ static inline void common_pthread_create(
 	}
 
 	ret = bypass_pthread_create(thread, &attr, start_routine, arg);
-	if (unlikely(ret))
-		nosv_abort("Cannot create pthread");
+	if (unlikely(ret)) {
+		nosv_abort("Cannot create pthread (args: %p, %p, %p, %p. ret: %d)", thread, &attr, start_routine, arg, ret);
+	}
 
 	ret = pthread_attr_destroy(&attr);
 	if (unlikely(ret))
@@ -112,8 +113,9 @@ static inline void pthread_swap(
 ) {
 	if (cpuset) {
 		assert(target);
-		if (unlikely(bypass_sched_setaffinity(target->tid, cpusetsize, cpuset)))
-			nosv_abort("Cannot change thread affinity");
+		int ret = bypass_sched_getaffinity(target->tid, cpusetsize, cpuset);
+		if (unlikely(ret))
+			nosv_abort("Cannot change thread affinity, returned %d", ret);
 	}
 	if (target)
 		nosv_condvar_signal(&target->condvar);

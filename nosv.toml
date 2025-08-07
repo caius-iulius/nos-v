@@ -121,7 +121,7 @@
 	# path of the config file being used
 	dump_config = false
 	# Print explicitely the used cpu binding
-	print_binding = false
+	print_binding = true
 
 # Hardware Counters configuration
 [hwcounters]
