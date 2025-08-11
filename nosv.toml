@@ -18,6 +18,9 @@
 	# will result in independent nOS-V instances. Note that both the name of the shared memory as well as the
 	# isolation level have to match for nOS-V instances to connect
 	name = "nosv"
+	# Location of the shared memory section. Choose a directory for which you have rw privileges
+	# Default value: "/dev/shm" (POSIX default)
+    location = "/dev/shm"
 	# Isolation level of nOS-V. Possible values are:
 	# "process" - Each process has a separate nOS-V instance
 	# "user" - nOS-V instances are shared for the same user

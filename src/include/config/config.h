@@ -44,6 +44,7 @@ typedef struct rt_config {
 	size_t thread_stack_size;
 
 	// Shared Memory
+	const char *shm_location;
 	const char *shm_name;
 	const char *shm_isolation_level;
 	size_t shm_size;

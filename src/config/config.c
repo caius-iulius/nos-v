@@ -52,6 +52,7 @@ static inline void config_init(rt_config_t *config)
 
 	// Use strdup for strings by default?
 	config->shm_name = strdup(SHM_NAME);
+	config->shm_location = strdup(SHM_LOCATION);
 	assert(config->shm_name);
 	config->shm_isolation_level = strdup(SHM_ISOLATION_LEVEL);
 	assert(config->shm_isolation_level);
@@ -127,6 +128,7 @@ static inline int config_check(rt_config_t *config)
 
 	// Remember empty strings are treated as NULL
 	sanity_check(config->shm_name, "Shared memory name cannot be empty");
+	sanity_check(config->shm_location, "Shared memory location cannot be empty");
 	sanity_check(config->shm_size > (10 * 2 * 1024 * 1024), "Small shared memory sizes (less than 10 pages) are not supported");
 	sanity_check(((uintptr_t)config->shm_start) >= 4096, "Mapping shared memory at page 0 is not allowed");
 	sanity_check(config->shm_isolation_level, "Isolation level cannot be empty");
