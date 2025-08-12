@@ -37,3 +37,5 @@ tests/driver
 *-coverage/
 *-coverage.info
 coverage-report
+.cache/
+compile_commands.json
